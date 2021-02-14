@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
+        else if (other.gameObject.tag == "Obstacle")
+        {
+            Destroy(gameObject);
+        }
+        //Добавить рикошет?
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
