@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    public int damage = 20;
+
+    private void OnTriggerEnter2D(Collider2D hitinfo)
     {
-        if (other.gameObject.tag == "Enemy")
-        {
-            Destroy(other.gameObject);
+        EnemyHealthSystem enemy = hitinfo.GetComponent<EnemyHealthSystem>();
+
+        if (enemy != null) {
+            enemy.TakeDamage(damage);
+            //Уничтожить выстреленную пулю
             Destroy(gameObject);
         }
-        else if (other.gameObject.tag == "Obstacle")
+        //Старая логика смерти врага
+
+        //if (hitinfo.gameObject.tag == "Enemy")
+        //{
+        //    Destroy(hitinfo.gameObject);
+        //    Destroy(gameObject);
+        //}
+        if (hitinfo.gameObject.tag == "Obstacle")
         {
             Destroy(gameObject);
         }
