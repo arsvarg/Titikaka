@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
+
     void Update()
     {
         if (Vector2.Distance(transform.position, FindObjectOfType<Player_movement>().transform.position) > 50f)
