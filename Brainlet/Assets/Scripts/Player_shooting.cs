@@ -8,10 +8,16 @@ public class Player_shooting : MonoBehaviour
     [SerializeField] Transform firePoint;
     [SerializeField] float bulletForce;
     [SerializeField] Transform[] firePoints;
+    [SerializeField] GameObject[] Weapons;
+    [SerializeField] GameObject[] bulletPrefabs;
+
     public GameObject bulletPrefab;
     Player_movement player_movement;
     public float fireRate = 2f;
     float nextShootTime;
+    float previousOffset;
+    int previousWeapon;
+    public AudioSource sound;
     
 
     int chosenWeapon = 1;
@@ -26,10 +32,17 @@ public class Player_shooting : MonoBehaviour
     {
         if (Time.time >= nextShootTime)
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButton("Fire1"))
             {
-                Shoot(chosenWeapon);
-                nextShootTime = Time.time + 1f / fireRate;
+                if (Weapons[chosenWeapon - 1].activeSelf)
+                {
+                    Shoot(chosenWeapon);
+                    nextShootTime = Time.time + 1f / fireRate;
+                }
+                else
+                {
+                    Debug.Log("No weapon here!");
+                }
 
             }
 
@@ -58,15 +71,25 @@ public class Player_shooting : MonoBehaviour
             player_movement.directionOffset = 180f;
             chosenWeapon = 4;
         }
-        if (Input.GetKeyDown("5"))
-        {
-            player_movement.directionOffset = -120f;
-            chosenWeapon = 5;
-        }
         if (Input.GetKeyDown("6"))
         {
             player_movement.directionOffset = -60f;
             chosenWeapon = 6;
+        }
+        if (Input.GetButtonDown("Shield"))
+        {
+            previousOffset = player_movement.directionOffset;
+            previousWeapon = chosenWeapon;
+        }
+        if (Input.GetButton("Shield"))
+        {
+            player_movement.directionOffset = -120f;
+            chosenWeapon = 5;
+        }
+        if (Input.GetButtonUp("Shield"))
+        {
+            player_movement.directionOffset = previousOffset;
+            chosenWeapon = previousWeapon;
         }
     }
 
@@ -74,20 +97,18 @@ public class Player_shooting : MonoBehaviour
     {
         if (chosenWeapon == 1)
         {
-            GameObject bullet = Instantiate(bulletPrefab, firePoints[0].position, firePoints[0].rotation);
-            Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
-            bulletRB.AddForce(firePoints[0].up * bulletForce, ForceMode2D.Impulse);
+            GameObject bullet = Instantiate(bulletPrefabs[0], firePoints[0].position, firePoints[0].rotation);
+            
         }
 
         if (chosenWeapon == 2)
         {
-            Debug.Log("No weapon here!");
+            
         }
         if (chosenWeapon == 3)
         {
-            GameObject bullet = Instantiate(bulletPrefab, firePoints[2].position, firePoints[2].rotation);
-            Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
-            bulletRB.AddForce(firePoints[2].up * bulletForce, ForceMode2D.Impulse);
+            GameObject bullet = Instantiate(bulletPrefabs[2], firePoints[2].position, firePoints[2].rotation);
+            
         }
         if (chosenWeapon == 4)
         {
@@ -97,9 +118,7 @@ public class Player_shooting : MonoBehaviour
         }
         if (chosenWeapon == 5)
         {
-            GameObject bullet = Instantiate(bulletPrefab, firePoints[4].position, firePoints[4].rotation);
-            Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
-            bulletRB.AddForce(firePoints[4].up * bulletForce, ForceMode2D.Impulse);
+            sound.Play();
         }
         if (chosenWeapon == 6)
         {
@@ -111,5 +130,16 @@ public class Player_shooting : MonoBehaviour
 
 
 
+    }
+
+    
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<weaponCode>())
+        {
+            Weapons[collision.GetComponent<weaponCode>()._weaponCode - 1].SetActive(true);
+            Destroy(collision.gameObject);
+        }
     }
 }
