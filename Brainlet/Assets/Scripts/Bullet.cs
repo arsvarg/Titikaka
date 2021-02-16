@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+<<<<<<< HEAD
     [SerializeField] float bulletForce;
     [SerializeField] float fireRate;
 
@@ -15,6 +16,20 @@ public class Bullet : MonoBehaviour
         FindObjectOfType<Player_shooting>().fireRate = fireRate;
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(transform.up * bulletForce, ForceMode2D.Impulse);
+=======
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+        }
+        else if (other.gameObject.tag == "Obstacle")
+        {
+            Destroy(gameObject);
+        }
+        //Добавить рикошет?
+>>>>>>> parent of 9586afe (Enemy health system)
     }
 
     void OnCollisionEnter2D(Collision2D collision)
