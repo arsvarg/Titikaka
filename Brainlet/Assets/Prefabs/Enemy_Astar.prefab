@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 4064366567732721599}
   - component: {fileID: 4064366569644117949}
   - component: {fileID: 4064366569644117890}
+  - component: {fileID: 824090618}
   m_Layer: 0
   m_Name: Enemy_Astar
   m_TagString: Enemy
@@ -237,3 +238,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.8
+--- !u!114 &824090618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4064366569644117891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 304f079879d3a9542830a50cdd712d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100

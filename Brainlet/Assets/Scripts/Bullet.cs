@@ -15,13 +15,8 @@ public class Bullet : MonoBehaviour
             //Уничтожить выстреленную пулю
             Destroy(gameObject);
         }
-        //Старая логика смерти врага
+        
 
-        //if (hitinfo.gameObject.tag == "Enemy")
-        //{
-        //    Destroy(hitinfo.gameObject);
-        //    Destroy(gameObject);
-        //}
         if (hitinfo.gameObject.tag == "Obstacle")
         {
             Destroy(gameObject);
@@ -36,7 +31,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        if (Vector2.Distance(transform.position, FindObjectOfType<Player_movement>().transform.position) > 50f)
+        if (Vector2.Distance(transform.position, FindObjectOfType<Player_movement>().gameObject.transform.position) > 50f)
         {
             Destroy(gameObject);
         }

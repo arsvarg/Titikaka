@@ -63,7 +63,7 @@ MonoBehaviour:
   target: {fileID: 0}
   Speed: 400
   nextWaypointDistance: 3
-  EnemyGFX: {fileID: 0}
+  EnemyGFX: {fileID: 7111648962082839134}
 --- !u!114 &7111648961280456527
 MonoBehaviour:
   m_ObjectHideFlags: 0
